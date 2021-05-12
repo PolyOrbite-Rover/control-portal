@@ -8,7 +8,11 @@ export class ROSService {
   private ros: Ros;
 
   constructor() {
-    this.ros = new Ros({url: 'ws://127.0.0.1:9090'});
+    this.ros = new Ros({url: 'ws://localhost:9090'});
+
+    this.ros.on('error', () => {
+      console.error('Could not connect to ROS');
+    });
   }
 
   getTopic(name: string, messageType: string): Topic {
