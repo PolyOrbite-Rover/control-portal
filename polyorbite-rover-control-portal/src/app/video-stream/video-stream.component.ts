@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { Topic } from 'roslib';
 import { ROSService } from '../ROS/ros.service';
 
@@ -7,11 +7,16 @@ import { ROSService } from '../ROS/ros.service';
   templateUrl: './video-stream.component.html',
   styleUrls: ['./video-stream.component.sass']
 })
-export class VideoStreamComponent {
+export class VideoStreamComponent implements AfterViewInit {
   private m_cameraTopic: Topic | undefined;
 
-  @Input('width') width: string | undefined;
-  @Input('height') height: string | undefined;
+  private originalFrameWidth: number;
+  private originalFrameHeight: number;
+  private lastContainerWidth: number;
+  private lastContainerHeight: number;
+
+  @ViewChild('container') container: ElementRef<HTMLDivElement>;
+  @ViewChild('frame', { static: false }) frame: ElementRef<HTMLCanvasElement>;
 
   @Input('message-type')
   messageType: string = 'sensor_msgs/CompressedImage';
@@ -21,7 +26,33 @@ export class VideoStreamComponent {
     this.updateTopic(name);
   }
 
-  @ViewChild('frame', { static: false }) frame: ElementRef<HTMLCanvasElement>;
+  get frameWidth(): number {
+    if(this.lastContainerHeight === 0) return this.originalFrameWidth;
+
+    const ajustedWidth = (this.originalFrameWidth / this.originalFrameHeight) * this.lastContainerWidth;
+    const isLargestComponent = this.lastContainerWidth >= this.lastContainerHeight;
+
+    return isLargestComponent ? this.lastContainerWidth : ajustedWidth;
+  }
+
+  get frameHeight(): number {
+    if(this.lastContainerWidth === 0) return this.originalFrameHeight;
+
+    const ajustedHeight = (this.originalFrameHeight / this.originalFrameWidth) * this.lastContainerWidth;
+    const isLargestComponent = this.lastContainerHeight >= this.lastContainerWidth;
+
+    return isLargestComponent ? this.lastContainerHeight : ajustedHeight;
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    this.lastContainerWidth = this.container.nativeElement.clientWidth;
+    this.lastContainerHeight = this.container.nativeElement.clientHeight;
+  }
+
+  get isLoading(): boolean {
+    return this.m_cameraTopic === undefined;
+  }
 
   private updateTopic(name: string): void {
     this.m_cameraTopic?.unsubscribe();
@@ -34,14 +65,17 @@ export class VideoStreamComponent {
 
     const image = new Image();
     image.onload = () => {
-      const newWidth = this.width === undefined ? image.width : parseInt(this.width);
-      const newHeight = this.height === undefined ? image.height : parseInt(this.height);
-      this.frame.nativeElement.width = newWidth;
-      this.frame.nativeElement.height = newHeight;
-      ctx.drawImage(image, 0, 0, newWidth, newHeight);
+      this.originalFrameWidth = image.width;
+      this.originalFrameHeight = image.height;
+      ctx.drawImage(image, 0, 0, this.frameWidth, this.frameHeight);
     };
 
     image.src = `data:image/png;base64,${imageBase64}`;
+  }
+
+  ngAfterViewInit(): void {
+    this.lastContainerWidth = this.container.nativeElement.clientWidth;
+    this.lastContainerHeight = this.container.nativeElement.clientHeight;
   }
 
   constructor(private ros: ROSService) {}

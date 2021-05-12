@@ -1,1 +1,4 @@
-<canvas #frame></canvas>
+<div #container>
+  <canvas #frame [width]="frameWidth" [height]="frameHeight" *ngIf="!isLoading"></canvas>
+  <mat-spinner class="center loading-overlay" *ngIf="isLoading"></mat-spinner>
+</div>
