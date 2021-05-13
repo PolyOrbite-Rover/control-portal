@@ -16,7 +16,7 @@ export class VideoStreamComponent implements AfterViewInit {
   private lastContainerHeight: number;
 
   @ViewChild('container') container: ElementRef<HTMLDivElement>;
-  @ViewChild('frame', { static: false }) frame: ElementRef<HTMLCanvasElement>;
+  @ViewChild('frame') frame: ElementRef<HTMLCanvasElement>;
 
   @Input('message-type')
   messageType: string = 'sensor_msgs/CompressedImage';
