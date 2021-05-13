@@ -74,8 +74,10 @@ export class VideoStreamComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.lastContainerWidth = this.container.nativeElement.clientWidth;
-    this.lastContainerHeight = this.container.nativeElement.clientHeight;
+    setTimeout(() => {
+      this.lastContainerWidth = this.container.nativeElement.clientWidth;
+      this.lastContainerHeight = this.container.nativeElement.clientHeight;
+    });
   }
 
   constructor(private ros: ROSService) {}
