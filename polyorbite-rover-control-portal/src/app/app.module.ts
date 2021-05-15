@@ -7,12 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { VideoStreamSwitchComponent } from './video-stream-switch/video-stream-switch.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { RoverStateComponent } from './rover-state/rover-state.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     VideoStreamComponent,
     VideoStreamSwitchComponent,
+    RoverStateComponent,
   ],
   imports: [
     BrowserModule,
