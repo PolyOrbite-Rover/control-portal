@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { GamepadService } from './gamepad/gamepad.service';
+import { KeyboardService } from './keyboard/keyboard.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,5 @@ import { GamepadService } from './gamepad/gamepad.service';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  constructor(gamepad: GamepadService) {}
+  constructor(gamepad: GamepadService, keyboard: KeyboardService) {}
 }
