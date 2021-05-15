@@ -15,7 +15,6 @@ export class GamepadService {
     fromEvent(window, 'gamepadconnected').subscribe((event: GamepadEvent) => {
       const id = event.gamepad.id;
       const index = event.gamepad.index;
-      console.log(event.gamepad);
       this.handlers[id] = new GamepadHandler(index, controlProxy);
     });
 
