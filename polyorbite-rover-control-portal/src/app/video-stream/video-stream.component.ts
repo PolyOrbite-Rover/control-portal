@@ -15,6 +15,8 @@ export class VideoStreamComponent implements AfterViewInit {
   private lastContainerWidth: number;
   private lastContainerHeight: number;
 
+  private firstFrameReceived: boolean;
+
   @ViewChild('container') container: ElementRef<HTMLDivElement>;
   @ViewChild('frame') frame: ElementRef<HTMLCanvasElement>;
 
@@ -51,26 +53,33 @@ export class VideoStreamComponent implements AfterViewInit {
   }
 
   get isLoading(): boolean {
-    return this.m_cameraTopic === undefined;
+    return this.m_cameraTopic === undefined || !this.firstFrameReceived;
   }
 
   private updateTopic(name: string): void {
+    this.firstFrameReceived = false;
     this.m_cameraTopic?.unsubscribe();
     this.m_cameraTopic = this.ros.getTopic(name, this.messageType);
     this.m_cameraTopic?.subscribe((message: any) => this.refreshImage(message.data));
   }
 
   private refreshImage(imageBase64: string) {
-    const ctx = this.frame.nativeElement.getContext('2d');
+    this.firstFrameReceived = true;
 
-    const image = new Image();
-    image.onload = () => {
-      this.originalFrameWidth = image.width;
-      this.originalFrameHeight = image.height;
-      ctx.drawImage(image, 0, 0, this.frameWidth, this.frameHeight);
-    };
+    const canvasIsReady = this.frame != undefined;
 
-    image.src = `data:image/png;base64,${imageBase64}`;
+    if(canvasIsReady) {
+      const ctx = this.frame.nativeElement.getContext('2d');
+
+      const image = new Image();
+      image.onload = () => {
+        this.originalFrameWidth = image.width;
+        this.originalFrameHeight = image.height;
+        ctx.drawImage(image, 0, 0, this.frameWidth, this.frameHeight);
+      };
+
+      image.src = `data:image/png;base64,${imageBase64}`;
+    }
   }
 
   ngAfterViewInit(): void {

@@ -1,4 +1,4 @@
 <div #container>
-  <canvas #frame [width]="frameWidth" [height]="frameHeight" *ngIf="!isLoading"></canvas>
-  <mat-spinner class="center loading-overlay" *ngIf="isLoading"></mat-spinner>
+  <canvas #frame [width]="frameWidth" [height]="frameHeight"></canvas>
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
 </div>
