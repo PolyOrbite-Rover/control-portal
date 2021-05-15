@@ -41,6 +41,4 @@ Start the web server
 2. `ng serve` or `npm run start` (`npm run start` runs `ng serve`, its meant to be a shortcut, but it is longer to write)
 
 ## What the application looks like right now (or not long ago if it has changed)
-![feature  Video stream from the rover's cameras](https://user-images.githubusercontent.com/5231337/118195477-4cc39400-b419-11eb-82c3-27cd9fef65bc.png)
-With new layout:
-![image](https://user-images.githubusercontent.com/5231337/118324833-958a5400-b4d0-11eb-9b99-b04b629332ae.png)
+![image](https://user-images.githubusercontent.com/5231337/118342336-e4e07c80-b4f0-11eb-8205-90cb09c746ef.png)
