@@ -25,7 +25,7 @@ Install the Angular CLI if you don't have it already
 
 4. `npm install -g @angular/cli`
 
-Install all project's dependencies
+Install all project dependencies
 
 5. `cd control-portal/polyorbite-rover-control-portal`
 6. `npm install` or `npm i` for short
