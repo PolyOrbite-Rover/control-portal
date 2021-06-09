@@ -5,7 +5,7 @@ A web application which is hosted on the rover. You can connect any device with 
 
 On the portal, you will find:
 1. A live video stream from the rover's cameras ;
-2. Controls to drive the rover remotely (especially joystick control) -> Feature to be developped ;
+2. Controls to drive the rover remotely (especially joystick control) ;
 3. A map located at the rover's position in the world and means to set waypoints to which the rover will navigate autonomously -> Feature to be developped.
 
 ## For developers
