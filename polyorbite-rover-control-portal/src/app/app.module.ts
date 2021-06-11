@@ -8,6 +8,7 @@ import { MaterialModule } from './material.module';
 import { VideoStreamSwitchComponent } from './video-stream-switch/video-stream-switch.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { RoverStateComponent } from './rover-state/rover-state.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { RoverStateComponent } from './rover-state/rover-state.component';
     VideoStreamComponent,
     VideoStreamSwitchComponent,
     RoverStateComponent,
+    MapComponent,
   ],
   imports: [
     BrowserModule,
