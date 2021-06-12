@@ -9,6 +9,9 @@ import { VideoStreamSwitchComponent } from './video-stream-switch/video-stream-s
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { RoverStateComponent } from './rover-state/rover-state.component';
 import { MapComponent } from './map/map.component';
+import { InterestPointsComponent } from './interest-point/component/list/interest-points.component';
+import { PhotographInterestPointDetailsComponent } from './interest-point/component/details/photograph/photograph-interest-point-details.component';
+import { InterestPointDetailsComponent } from './interest-point/component/details/base/interest-point-details.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +20,9 @@ import { MapComponent } from './map/map.component';
     VideoStreamSwitchComponent,
     RoverStateComponent,
     MapComponent,
+    InterestPointsComponent,
+    PhotographInterestPointDetailsComponent,
+    InterestPointDetailsComponent,
   ],
   imports: [
     BrowserModule,
