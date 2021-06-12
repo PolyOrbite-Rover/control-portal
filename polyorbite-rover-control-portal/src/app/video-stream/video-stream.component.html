@@ -1,4 +1,11 @@
-<div #container>
-  <canvas #frame [width]="frameWidth" [height]="frameHeight"></canvas>
-  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+<div #container class="layout-container">
+  <div>
+    <canvas #frame [width]="frameWidth" [height]="frameHeight"></canvas>
+    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+  </div>
+  <div class="overlay">
+    <button mat-icon-button color="primary" (click)="takePicture()">
+      <mat-icon>photo_camera</mat-icon>
+    </button>
+  </div>
 </div>

@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { Topic } from 'roslib';
+import { InterestPointService } from '../interest-point/service/interest-point.service';
+import { PhotographInterestPoint } from '../interest-point/type/photograph-interest-point';
 import { ROSService } from '../ROS/ros.service';
 
 @Component({
@@ -14,6 +16,8 @@ export class VideoStreamComponent implements AfterViewInit {
   private originalFrameHeight: number;
   private lastContainerWidth: number;
   private lastContainerHeight: number;
+
+  private lastFrameBase64: string;
 
   private firstFrameReceived: boolean;
 
@@ -56,6 +60,12 @@ export class VideoStreamComponent implements AfterViewInit {
     return this.m_cameraTopic === undefined || !this.firstFrameReceived;
   }
 
+  takePicture(): void {
+    this.interestPoints.add(
+      new PhotographInterestPoint(this.lastFrameBase64)
+    );
+  }
+
   private updateTopic(name: string): void {
     this.firstFrameReceived = false;
     this.m_cameraTopic?.unsubscribe();
@@ -65,6 +75,7 @@ export class VideoStreamComponent implements AfterViewInit {
 
   private refreshImage(imageBase64: string) {
     this.firstFrameReceived = true;
+    this.lastFrameBase64 = imageBase64;
 
     const canvasIsReady = this.frame != undefined;
 
@@ -89,5 +100,8 @@ export class VideoStreamComponent implements AfterViewInit {
     });
   }
 
-  constructor(private ros: ROSService) {}
+  constructor(
+    private ros: ROSService,
+    private interestPoints: InterestPointService
+  ) {}
 }
