@@ -41,4 +41,4 @@ Start the web server
 2. `ng serve` or `npm run start` (`npm run start` runs `ng serve`, its meant to be a shortcut, but it is longer to write)
 
 ## What the application looks like right now (or not long ago if it has changed)
-![image](https://user-images.githubusercontent.com/5231337/121786329-3120ea00-cb8d-11eb-9a57-bb2f036edce6.png)
+![image](https://user-images.githubusercontent.com/5231337/121796057-2d6c8200-cbe4-11eb-9e9a-bea142a39d41.png)
