@@ -88,10 +88,6 @@ export class MapComponent implements AfterViewInit {
     if(!this.map) this.zone.runOutsideAngular(() => this.initializeMap());
 
     setTimeout(() => {
-      console.log(this.container.nativeElement.clientWidth);
-      console.log(this.container.nativeElement.clientHeight);
-      console.log(this.width);
-      console.log(this.height);
       this.containerWidth = this.container.nativeElement.clientWidth;
       this.containerHeight = this.container.nativeElement.clientHeight;
     }, 1000);
