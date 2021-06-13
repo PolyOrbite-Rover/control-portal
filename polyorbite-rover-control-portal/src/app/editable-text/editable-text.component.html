@@ -1,0 +1,6 @@
+<input *ngIf="isEditing"
+         type="text"
+         #editor
+         [value]="text"
+         (keyup.enter)="updateText()">
+<label *ngIf="!isEditing" (dblclick)="isEditing = true">{{ text }}</label>
