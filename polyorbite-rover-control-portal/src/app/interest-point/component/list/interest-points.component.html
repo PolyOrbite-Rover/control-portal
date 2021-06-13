@@ -5,9 +5,10 @@
     <mat-list>
       <mat-list-item *ngFor="let interestPoint of interestPoints.entries">
         <button mat-stroked-button
-                (click)="selectedId = interestPoint.uuid"
+                (click)="select(interestPoint.uuid)"
                 [class.selected]="selectedId === interestPoint.uuid">
-          {{ interestPoint.name }}
+          <editable-text #interestPointNameEditors
+                         [(text)]="interestPoint.name"></editable-text>
         </button>
       </mat-list-item>
     </mat-list>
@@ -21,5 +22,4 @@
       </app-photograph-interest-point-details>
     </div>
   </div>
-
 </mat-drawer-container>
