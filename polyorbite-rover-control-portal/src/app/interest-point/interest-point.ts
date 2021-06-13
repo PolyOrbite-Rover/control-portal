@@ -2,7 +2,8 @@ import { InterestPointModel } from "./interest-point.model";
 import { v4 as makeUuid } from 'uuid';
 
 export abstract class InterestPoint {
-  abstract get name(): string;
+  name: string;
+
   abstract get model(): InterestPointModel;
 
   get uuid(): string {
