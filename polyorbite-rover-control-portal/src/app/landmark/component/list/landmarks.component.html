@@ -1,0 +1,21 @@
+<h3>Landmarks</h3>
+
+<mat-drawer-container autosize class="container">
+    <mat-drawer #drawer mode="side" opened="true" disableClose="true" class="list">
+        <mat-list>
+            <mat-list-item *ngFor="let landmark of landmarks.entries">
+                <button mat-stroked-button (click)="select(landmark.uuid)" [class.selected]="selectedId === landmark.uuid">
+          <editable-text #landmarkNameEditors
+                         [(text)]="landmark.name"></editable-text>
+        </button>
+            </mat-list-item>
+        </mat-list>
+    </mat-drawer>
+
+    <div class="details">
+        <div *ngFor="let landmark of landmarks.entries">
+            <app-interest-point-details [interest-point]="landmark" *ngIf="selectedId === landmark.uuid">
+            </app-interest-point-details>
+        </div>
+    </div>
+</mat-drawer-container>

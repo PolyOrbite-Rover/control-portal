@@ -1,6 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { InterestPoint } from 'src/app/interest-point/interest-point';
-import { PhotographInterestPointModel } from 'src/app/interest-point/model/photograph-interest-point.model';
+import { Component } from '@angular/core';
 import { PhotographInterestPoint } from 'src/app/interest-point/type/photograph-interest-point';
 import { InterestPointDetailsComponent } from '../base/interest-point-details.component';
 
