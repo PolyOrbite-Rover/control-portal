@@ -38,7 +38,7 @@ Navigate to where you cloned the repository
 
 Start the web server
 
-2. `ng serve` or `npm run start` (`npm run start` runs `ng serve`, its meant to be a shortcut, but it is longer to write)
+2. `ng serve` or `npm run start` (`npm run start` runs `ng serve`, it's meant to be a shortcut, but it is longer to write)
 
 ## What the application looks like right now (or not long ago if it has changed)
 ![image](https://user-images.githubusercontent.com/5231337/121796057-2d6c8200-cbe4-11eb-9e9a-bea142a39d41.png)
