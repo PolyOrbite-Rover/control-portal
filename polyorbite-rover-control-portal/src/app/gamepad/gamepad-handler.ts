@@ -1,6 +1,15 @@
 import { RoverControlProxyService } from "../rover-control-proxy/rover-control-proxy.service";
+import { ArmControlProxyService } from "../arm-control-proxy/arm-control-proxy.service";
+import { ControllerModeSwitchService } from "../controller-mode-switch/controller-mode-switch.service";
+
+enum Mode {
+  wheels,
+  arm,
+}
 
 export class GamepadHandler {
+  public mode: Mode;
+
   readonly REFRESH_RATE: number = 10;
 
   readonly DIRECTION_AXIS = 0;
@@ -28,11 +37,24 @@ export class GamepadHandler {
   }
 
   private handle(): void {
-    this.controlProxy.linearVelocity = this.linearVelocity;
-    this.controlProxy.angularVelocity = this.angularVelocity;
+    if (this.mode == Mode.wheels) {
+      // controlling WHEELS with the gamepad
+      this.controlProxy.linearVelocity = this.linearVelocity;
+      this.controlProxy.angularVelocity = this.angularVelocity;
+    } else {
+      // controlling ROBOTIC ARM with the gamepad
+      // this.armControlProxy.something = something...
+    }
   }
 
-  constructor(private id: number, private controlProxy: RoverControlProxyService) {
+  constructor(private id: number, private controlProxy: RoverControlProxyService, private armControlProxy: ArmControlProxyService, private switch: ControllerModeSwitchService) {
+    this.switch.observableState$.subscribe((data) => {
+      if (data == "wheels") {
+        this.mode = Mode.wheels;
+      } else {
+        this.mode = Mode.arm;
+      }
+    });
     setInterval(() => this.handle(), 1000 / this.REFRESH_RATE);
   }
 }

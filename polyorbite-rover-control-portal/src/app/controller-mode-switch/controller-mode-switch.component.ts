@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ControllerModeSwitchService } from './controller-mode-switch.service';
 
 
 @Component({
@@ -9,5 +10,7 @@ import { Component } from '@angular/core';
 export class ControllerModeSwitchComponent {
   mode: string = "wheels";
 
-  constructor() { }
+  constructor(private service: ControllerModeSwitchService) {
+    this.service.observableState(this.mode);
+  }
 }
