@@ -3,7 +3,7 @@ import { Topic } from 'roslib';
 import { ArucoLandmark } from 'src/app/landmark/type/aruco-landmark';
 import { LandmarkService } from '../landmark/service/landmark.service';
 import { ROSService } from '../ROS/ros.service';
-import { ArucoMsgData } from './aruco-msg-data';
+import { ArucoMsgData } from '../landmark/component/list/aruco-msg-data';
 
 @Component({
   selector: 'app-aruco-mode-switch',
