@@ -1,21 +1,21 @@
-import { ArucoLandmark } from 'src/app/landmark/type/aruco-landmark';
-import {Component, AfterViewInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Topic } from 'roslib';
+import { ArucoLandmark } from 'src/app/landmark/type/aruco-landmark';
 import { LandmarkService } from '../landmark/service/landmark.service';
 import { ROSService } from '../ROS/ros.service';
 import { ArucoMsgData } from './aruco-msg-data';
 
 @Component({
   selector: 'app-aruco-mode-switch',
+  styleUrls: ['./aruco.component.sass'],
   templateUrl: './aruco.component.html',
-  styleUrls: ['./aruco.component.sass']
 })
-export class ArucoModeSwitchComponent implements AfterViewInit {
+export class ArucoModeSwitchComponent {
   @Input('state')
-  checked: boolean;
+  public checked: boolean;
 
-  private m_arucoTopic: Topic | undefined;
-  messageType: string = 'polyorbite_rover/Code';
+  private arucoTopic: Topic | undefined;
+  public messageType = 'polyorbite_rover/Code';
 
   /*
    * On the Jetson :
@@ -30,22 +30,22 @@ export class ArucoModeSwitchComponent implements AfterViewInit {
   }
 
   private updateTopic(name: string): void {
-    this.m_arucoTopic?.unsubscribe();
-    this.m_arucoTopic = this.ros.getTopic(name, this.messageType);
-    this.m_arucoTopic?.subscribe((message: any) => this.addFoundAruco(message.data));
+    this.arucoTopic?.unsubscribe();
+    this.arucoTopic = this.ros.getTopic(name, this.messageType);
+    this.arucoTopic?.subscribe((message: any) => this.addFoundAruco(message.data));
   }
 
-  addFoundAruco(data: ArucoMsgData): void {
+  public addFoundAruco(data: ArucoMsgData): void {
     if (!this.landmarks.search(data.value)) {
       this.landmarks.add(
-        new ArucoLandmark(data.image, data.value, 0)
+        new ArucoLandmark(data.image, data.value, 0),
       );
     }
   }
 
   constructor(
     private ros: ROSService,
-    private landmarks: LandmarkService
+    private landmarks: LandmarkService,
   ) {
     this.checked = true;
   }
