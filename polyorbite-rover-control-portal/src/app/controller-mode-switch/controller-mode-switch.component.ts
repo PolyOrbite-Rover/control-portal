@@ -10,7 +10,12 @@ import { ControllerModeSwitchService } from './controller-mode-switch.service';
 export class ControllerModeSwitchComponent {
   mode: string = "wheels";
 
+  newState(value: string) {
+    this.mode = value;
+    this.service.setState(this.mode);
+  }
+
   constructor(private service: ControllerModeSwitchService) {
-    this.service.observableState(this.mode);
+    this.service.setState(this.mode);
   }
 }

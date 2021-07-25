@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ControllerModeSwitchService {
 
-  observableState$: Observable<any>;
-  private state = new Subject<any>();
+  observableState: Observable<string>;
+  private state: string;
 
   constructor() {
-    this.observableState$ = this.state.asObservable();
+    this.state = "wheels";
+    this.observableState = of(this.state);
   }
 
-  observableState(newState: any) {
+  setState(newState: string) {
     this.state = newState;
   }
 }
