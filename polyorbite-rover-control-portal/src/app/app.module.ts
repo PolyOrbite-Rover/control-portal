@@ -12,6 +12,7 @@ import { MapComponent } from './map/map.component';
 import { InterestPointsComponent } from './interest-point/component/list/interest-points.component';
 import { PhotographInterestPointDetailsComponent } from './interest-point/component/details/photograph/photograph-interest-point-details.component';
 import { InterestPointDetailsComponent } from './interest-point/component/details/base/interest-point-details.component';
+import { LandmarksComponent } from './landmark/component/list/landmarks.component';
 import { EditableTextComponent } from './editable-text/editable-text.component';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { EditableTextComponent } from './editable-text/editable-text.component';
     InterestPointsComponent,
     PhotographInterestPointDetailsComponent,
     InterestPointDetailsComponent,
+    LandmarksComponent,
     EditableTextComponent,
   ],
   imports: [

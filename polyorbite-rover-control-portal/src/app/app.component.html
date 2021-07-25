@@ -5,6 +5,7 @@
         </mat-card>
         <mat-card state>
             <app-rover-state></app-rover-state>
+            <app-landmarks></app-landmarks>
         </mat-card>
         <mat-card map>
             <app-map [center]="[-12531000,6708172]" [zoom]="14">
@@ -12,12 +13,6 @@
         </mat-card>
         <mat-card interest-points>
             <app-interest-points></app-interest-points>
-        </mat-card>
-        <mat-card landmarks>
-            <app-landmarks></app-landmarks>
-        </mat-card>
-        <mat-card aruco>
-            <app-aruco-mode-switch></app-aruco-mode-switch>
         </mat-card>
     </main>
 </div>
