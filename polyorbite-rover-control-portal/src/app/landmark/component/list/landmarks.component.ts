@@ -1,6 +1,10 @@
-import { Component, ElementRef, EventEmitter, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, QueryList, ViewChild, ViewChildren, Input } from '@angular/core';
 import { EditableTextComponent } from 'src/app/editable-text/editable-text.component';
 import { LandmarkService } from '../../service/landmark.service';
+import { Topic } from 'roslib';
+import { ArucoLandmark } from 'src/app/landmark/type/aruco-landmark';
+import { ROSService } from '../../../ROS/ros.service';
+import { ArucoMsgData } from './aruco-msg-data';
 
 @Component({
   selector: 'app-landmarks',
@@ -9,6 +13,9 @@ import { LandmarkService } from '../../service/landmark.service';
 })
 export class LandmarksComponent {
   selectedId: string;
+
+  private arucoTopic: Topic | undefined;
+  public messageType = 'polyorbite_rover/Code';
 
   @ViewChildren('landmarkNameEditors') landmarkNameEditors: QueryList<EditableTextComponent>;
 
@@ -25,7 +32,29 @@ export class LandmarksComponent {
     );
   }
 
-  constructor(public landmarks: LandmarkService) {
+  @Input('topic')
+  set topic(name: string) {
+    this.updateTopic(name);
+  }
+
+  private updateTopic(name: string): void {
+    this.arucoTopic?.unsubscribe();
+    this.arucoTopic = this.ros.getTopic(name, this.messageType);
+    this.arucoTopic?.subscribe((message: any) => this.addFoundAruco(message.data));
+  }
+
+  public addFoundAruco(data: ArucoMsgData): void {
+    if (!this.landmarks.search(data.value)) {
+      this.landmarks.add(
+        new ArucoLandmark(data.image, data.value, 0),
+      );
+    }
+  }
+
+  constructor(
+    private ros: ROSService,
+    public landmarks: LandmarkService,
+  ) {
     if(this.landmarks.entries.length > 0) {
       this.selectedId = this.landmarks.entries[0].uuid;
     }
