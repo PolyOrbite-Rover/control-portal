@@ -1,6 +1,8 @@
 <mat-button-toggle-group [value]="currentTopic" (change)="currentTopic = $event.value" aria-label="Camera">
-  <mat-button-toggle value="/stereo_camera/left/image_raw/compressed">Left camera</mat-button-toggle>
-  <mat-button-toggle value="/stereo_camera/right/image_raw/compressed">Right camera</mat-button-toggle>
+    <mat-button-toggle value="/stereo_camera/left/image_raw/compressed">Left camera</mat-button-toggle>
+    <mat-button-toggle value="/stereo_camera/right/image_raw/compressed">Right camera</mat-button-toggle>
 </mat-button-toggle-group>
+
+<app-controller-mode-switch></app-controller-mode-switch>
 
 <app-video-stream [topic]="currentTopic"></app-video-stream>
