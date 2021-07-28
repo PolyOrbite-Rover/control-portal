@@ -32,9 +32,10 @@ export abstract class InterestPoint {
     this.onContentChanged.emit(this);
   }
 
-  constructor() {
-    this.mUuid = makeUuid();
-    this.mCreationTimestamp = new Date();
+  constructor(name?: string, uuid?: string, creationTimestamp?: Date) {
+    if(name != undefined) this.mName = name;
+    this.mUuid = uuid ?? makeUuid();
+    this.mCreationTimestamp = creationTimestamp ?? new Date();
     this.onContentChanged = new EventEmitter();
   }
 }
