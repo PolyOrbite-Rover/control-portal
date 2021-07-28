@@ -9,7 +9,7 @@ export class ArucoLandmark extends InterestPoint {
 
   updateDistance(newDist: number) {
     this.distance = newDist;
-    this.name = `Aruco Code #`+this.value+` found - dist: `+this.distance;
+    this.name = `Aruco Code #`+this.value+` found`;
   }
 
   getValue() {
@@ -20,6 +20,6 @@ export class ArucoLandmark extends InterestPoint {
     super();
 
     const creationTime = this.creationTimestamp.toLocaleTimeString();
-    this.name = `Aruco Code #`+this.value+` found - dist: `+this.distance;
+    this.name = `Aruco Code #`+this.value+` found`;
   }
 }
