@@ -32,17 +32,6 @@ export class LandmarksComponent {
     );
   }
 
-  @Input('topic')
-  set topic(name: string) {
-    this.updateTopic(name);
-  }
-
-  private updateTopic(name: string): void {
-    this.arucoTopic?.unsubscribe();
-    this.arucoTopic = this.ros.getTopic(name, this.messageType);
-    this.arucoTopic?.subscribe((message: any) => this.addFoundAruco(message.data));
-  }
-
   public addFoundAruco(data: ArucoMsgData): void {
     if (!this.landmarks.search(data.value)) {
       this.landmarks.add(
@@ -58,5 +47,7 @@ export class LandmarksComponent {
     if(this.landmarks.entries.length > 0) {
       this.selectedId = this.landmarks.entries[0].uuid;
     }
+    this.arucoTopic = this.ros.getTopic("/aruco", this.messageType);
+    this.arucoTopic?.subscribe((message: any) => this.addFoundAruco(message.data));
   }
 }
