@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Ros, Topic } from 'roslib';
+import { Ros, Topic, Service } from 'roslib';
 
 @Injectable({
   providedIn: 'root'
@@ -17,5 +17,9 @@ export class ROSService {
 
   getTopic(name: string, messageType: string): Topic {
     return new Topic({ros: this.ros, name, messageType});
+  }
+
+  getService(name: string, serviceType: string): Service {
+    return new Service({ros: this.ros, name, serviceType});
   }
 }
