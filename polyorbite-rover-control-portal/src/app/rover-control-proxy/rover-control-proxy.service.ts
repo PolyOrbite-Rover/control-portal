@@ -6,7 +6,7 @@ import { ROSService } from '../ROS/ros.service';
   providedIn: 'root'
 })
 export class RoverControlProxyService {
-  private readonly DIFF_DRIVE_VELOCITY_TOPIC_NAME = '/rover_diff_drive_controller/cmd_vel';
+  private readonly DIFF_DRIVE_VELOCITY_TOPIC_NAME = '/rover_velocity_controller/cmd_vel';
   private readonly DIFF_DRIVE_VELOCITY_MESSAGE_TYPE = 'geometry_msgs/Twist';
 
   private readonly LINEAR_VELOCITY_COEFFICIENT = 3;
