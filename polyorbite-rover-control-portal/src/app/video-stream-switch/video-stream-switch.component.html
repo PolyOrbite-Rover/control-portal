@@ -1,6 +1,7 @@
 <mat-button-toggle-group [value]="currentTopic" (change)="currentTopic = $event.value" aria-label="Camera">
-  <mat-button-toggle value="/stereo_camera/left/image_raw/compressed">Left camera</mat-button-toggle>
-  <mat-button-toggle value="/stereo_camera/right/image_raw/compressed">Right camera</mat-button-toggle>
+  <mat-button-toggle value="/zed2/zed_node/left_raw/image_raw_color/compressed">Left camera</mat-button-toggle>
+  <mat-button-toggle value="/zed2/zed_node/right_raw/image_raw_color/compressed">Right camera</mat-button-toggle>
+  <mat-button-toggle value="/usb_cam_node/image_raw/compressed">Arm camera</mat-button-toggle>
 </mat-button-toggle-group>
 
 <app-video-stream [topic]="currentTopic"></app-video-stream>
