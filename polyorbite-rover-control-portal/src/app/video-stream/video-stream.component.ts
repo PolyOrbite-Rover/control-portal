@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { Topic } from 'roslib';
+import { InterestPoint } from '../interest-point/interest-point';
 import { InterestPointService } from '../interest-point/service/interest-point.service';
 import { PhotographInterestPoint } from '../interest-point/type/photograph-interest-point';
-import { ROSService } from '../ROS/ros.service';
 
 @Component({
   selector: 'app-video-stream',
@@ -10,26 +10,28 @@ import { ROSService } from '../ROS/ros.service';
   styleUrls: ['./video-stream.component.sass']
 })
 export class VideoStreamComponent implements AfterViewInit {
-  private m_cameraTopic: Topic | undefined;
+  private cameraTopicName: string;
 
-  private originalFrameWidth: number;
-  private originalFrameHeight: number;
+  private originalFrameWidth: number = 640;
+  private originalFrameHeight: number = 480;
   private lastContainerWidth: number;
   private lastContainerHeight: number;
 
-  private lastFrameBase64: string;
-
-  private firstFrameReceived: boolean;
+  private firstPictureTaken: boolean = false;
 
   @ViewChild('container') container: ElementRef<HTMLDivElement>;
-  @ViewChild('frame') frame: ElementRef<HTMLCanvasElement>;
+  @ViewChild('frame') frame: ElementRef<HTMLImageElement>;
 
   @Input('message-type')
   messageType: string = 'sensor_msgs/CompressedImage';
 
   @Input('topic')
   set topic(name: string) {
-    this.updateTopic(name);
+    this.cameraTopicName = name;
+  }
+
+  get videoUrl(): string {
+    return `http://jxnx:8080/stream?topic=${this.cameraTopicName}`;
   }
 
   get frameWidth(): number {
@@ -57,40 +59,36 @@ export class VideoStreamComponent implements AfterViewInit {
   }
 
   get isLoading(): boolean {
-    return this.m_cameraTopic === undefined || !this.firstFrameReceived;
+    return false;
   }
 
   takePicture(): void {
-    this.interestPoints.add(
-      new PhotographInterestPoint(this.lastFrameBase64)
-    );
-  }
+    let image = this.frame.nativeElement;
+    image.crossOrigin = 'Anonymous';
 
-  private updateTopic(name: string): void {
-    this.firstFrameReceived = false;
-    this.m_cameraTopic?.unsubscribe();
-    this.m_cameraTopic = this.ros.getTopic(name, this.messageType);
-    this.m_cameraTopic?.subscribe((message: any) => this.refreshImage(message.data));
-  }
-
-  private refreshImage(imageBase64: string) {
-    this.firstFrameReceived = true;
-    this.lastFrameBase64 = imageBase64;
-
-    const canvasIsReady = this.frame != undefined;
-
-    if(canvasIsReady) {
-      const ctx = this.frame.nativeElement.getContext('2d');
-
-      const image = new Image();
-      image.onload = () => {
-        this.originalFrameWidth = image.width;
-        this.originalFrameHeight = image.height;
-        ctx.drawImage(image, 0, 0, this.frameWidth, this.frameHeight);
-      };
-
-      image.src = `data:image/png;base64,${imageBase64}`;
+    if(this.firstPictureTaken) {
+      this.publishPicture(image);
     }
+    else {
+      image.onload = () => {
+        this.publishPicture(image);
+        this.firstPictureTaken = true;
+      }
+    }
+  }
+
+  private publishPicture(image: HTMLImageElement): void {
+    var canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
+
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0);
+    
+    var dataURL = canvas.toDataURL("image/png");
+    let base64Frame = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    
+    this.interestPoints.add(new PhotographInterestPoint(base64Frame));
   }
 
   ngAfterViewInit(): void {
@@ -100,8 +98,5 @@ export class VideoStreamComponent implements AfterViewInit {
     });
   }
 
-  constructor(
-    private ros: ROSService,
-    private interestPoints: InterestPointService
-  ) {}
+  constructor(private interestPoints: InterestPointService) { }
 }

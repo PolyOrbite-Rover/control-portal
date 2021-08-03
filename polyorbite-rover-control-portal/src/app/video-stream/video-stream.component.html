@@ -1,6 +1,6 @@
 <div #container class="layout-container">
   <div>
-    <canvas #frame [width]="frameWidth" [height]="frameHeight"></canvas>
+    <img #frame [src]="videoUrl" [width]="frameWidth">
     <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
   </div>
   <div class="overlay">
