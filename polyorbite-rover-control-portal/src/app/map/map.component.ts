@@ -10,6 +10,8 @@ import {get as GetProjection} from 'ol/proj'
 import {Extent} from 'ol/extent';
 import TileLayer from 'ol/layer/Tile';
 import OSM, {ATTRIBUTION} from 'ol/source/OSM';
+import { GpsService } from '../gps/service/gps.service';
+import { toSize } from 'ol/size';
 
 const proj4 = (proj4Import as any).default;
 
@@ -34,6 +36,8 @@ export class MapComponent implements AfterViewInit {
   private containerWidth: number;
   private containerHeight: number;
 
+  autoCenter: boolean = true;
+
   view: View;
   projection: Projection;
   map: Map;
@@ -41,7 +45,7 @@ export class MapComponent implements AfterViewInit {
   @ViewChild('container') container: ElementRef<HTMLDivElement>;
 
   @Input() center: Coordinate;
-  @Input() zoom: number;
+  @Input() zoom: number = 4;
 
   get width(): number {
     return this.containerWidth;
@@ -67,7 +71,7 @@ export class MapComponent implements AfterViewInit {
     this.view = new View({
       center: this.center,
       zoom: this.zoom,
-      projection: this.projection
+      projection: 'EPSG:4326'
     });
 
     this.map = new Map({
@@ -87,11 +91,22 @@ export class MapComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     if(!this.map) this.zone.runOutsideAngular(() => this.initializeMap());
 
+    this.gps.onFixUpdated.subscribe(coordinates => {
+      if(this.autoCenter) {
+        this.center = [coordinates.longitude, coordinates.latitude];
+        this.view.centerOn(this.center, toSize(this.zoom), [0, 0]);
+      }
+    });
+
     setTimeout(() => {
       this.containerWidth = this.container.nativeElement.clientWidth;
       this.containerHeight = this.container.nativeElement.clientHeight;
     }, 1000);
   }
 
-  constructor(private zone: NgZone, private changeDetector: ChangeDetectorRef) { }
+  constructor(
+    private zone: NgZone,
+    private changeDetector: ChangeDetectorRef,
+    private gps: GpsService
+  ) {}
 }

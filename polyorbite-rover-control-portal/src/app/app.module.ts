@@ -13,6 +13,7 @@ import { InterestPointsComponent } from './interest-point/component/list/interes
 import { PhotographInterestPointDetailsComponent } from './interest-point/component/details/photograph/photograph-interest-point-details.component';
 import { InterestPointDetailsComponent } from './interest-point/component/details/base/interest-point-details.component';
 import { EditableTextComponent } from './editable-text/editable-text.component';
+import { GpsDataVisualizerComponent } from './gps/gps-data-visualizer/gps-data-visualizer.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { EditableTextComponent } from './editable-text/editable-text.component';
     PhotographInterestPointDetailsComponent,
     InterestPointDetailsComponent,
     EditableTextComponent,
+    GpsDataVisualizerComponent,
   ],
   imports: [
     BrowserModule,

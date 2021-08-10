@@ -4,4 +4,7 @@
        [style.width.px]="width"
        [style.height.px]="height">
   </div>
+  <mat-slide-toggle [checked]="autoCenter" (change)="autoCenter = $event.checked">
+      Auto center
+  </mat-slide-toggle>
 </div>
