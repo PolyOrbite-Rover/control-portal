@@ -44,6 +44,8 @@ export class MapComponent implements AfterViewInit {
   private containerWidth: number;
   private containerHeight: number;
 
+  private roverPositionMarker: Feature;
+
   autoCenter: boolean = true;
 
   view: View;
@@ -111,11 +113,11 @@ export class MapComponent implements AfterViewInit {
     });
     this.map.addLayer(roverLayer);
     
-    let roverMarker = new Feature({
+    this.roverPositionMarker = new Feature({
       geometry: new Point([coordinates.longitude, coordinates.latitude])
     });
 
-    roverSource.addFeature(roverMarker);
+    roverSource.addFeature(this.roverPositionMarker);
   }
 
   ngAfterViewInit(): void {
@@ -125,7 +127,7 @@ export class MapComponent implements AfterViewInit {
       if(this.autoCenter) {
         this.center = [coordinates.longitude, coordinates.latitude];
         this.view.centerOn(this.center, toSize(this.zoom), [0, 0]);
-        this.makeRoverMarker(coordinates);
+        this.roverPositionMarker.setGeometry(new Point([coordinates.longitude, coordinates.latitude]));
       }
     });
 
