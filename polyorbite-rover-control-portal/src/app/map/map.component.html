@@ -7,4 +7,20 @@
   <mat-slide-toggle [checked]="autoCenter" (change)="autoCenter = $event.checked">
       Auto center
   </mat-slide-toggle>
+  <fieldset>
+    <legend>Target GPS coordinates</legend>
+    <span>
+      <mat-form-field appearance="fill">
+        <mat-label>Latitude:</mat-label>
+        <input matInput type="text" placeholder="Latitude" [(ngModel)]="targetLatitude">
+      </mat-form-field>
+    </span>
+    <span>
+      <mat-form-field appearance="fill">
+        <mat-label>Longitude:</mat-label>
+        <input matInput type="text" placeholder="Latitude" [(ngModel)]="targetLongitude">
+      </mat-form-field>
+    </span>
+    <span><button mat-button (click)="updateTarget()">Update</button></span>
+  </fieldset>
 </div>

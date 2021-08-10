@@ -14,6 +14,7 @@ import { PhotographInterestPointDetailsComponent } from './interest-point/compon
 import { InterestPointDetailsComponent } from './interest-point/component/details/base/interest-point-details.component';
 import { EditableTextComponent } from './editable-text/editable-text.component';
 import { GpsDataVisualizerComponent } from './gps/gps-data-visualizer/gps-data-visualizer.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { GpsDataVisualizerComponent } from './gps/gps-data-visualizer/gps-data-v
     BrowserAnimationsModule,
     MaterialModule,
     MatButtonToggleModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -16,6 +16,9 @@ import VectorSource from 'ol/source/Vector';
 import XYZ from 'ol/source/XYZ';
 import Point from 'ol/geom/Point';
 import { WGS84Coordinates } from '../gps/data/wgs84-coordinates';
+import Style from 'ol/style/Style';
+import Stroke from 'ol/style/Stroke';
+import Fill from 'ol/style/Fill';
 
 const proj4 = (proj4Import as any).default;
 
@@ -41,6 +44,10 @@ export class MapComponent implements AfterViewInit {
   private containerHeight: number;
 
   private roverPositionMarker: Feature;
+  private targetPositionMarker: Feature;
+
+  targetLatitude: number;
+  targetLongitude: number;
 
   autoCenter: boolean = true;
 
@@ -98,6 +105,7 @@ export class MapComponent implements AfterViewInit {
       ])
     });
     this.makeRoverMarker({ latitude: 0, longitude: 0});
+    this.makeTargetMarker({ latitude: 0, longitude: 0});
 
     this.view.centerOn([0, 0], toSize(this.zoom), [0, 0]);
   }
@@ -114,6 +122,29 @@ export class MapComponent implements AfterViewInit {
     });
 
     roverSource.addFeature(this.roverPositionMarker);
+  }
+
+  private makeTargetMarker(coordinates: WGS84Coordinates) {
+    let targetSource = new VectorSource({});
+    let targetLayer = new VectorLayer({
+      source: targetSource
+    });
+    this.map.addLayer(targetLayer);
+    
+    this.targetPositionMarker = new Feature({
+      geometry: new Point([coordinates.longitude, coordinates.latitude])
+    });
+
+    targetSource.addFeature(this.targetPositionMarker);
+  }
+
+  updateTarget(): void {
+    this.targetPositionMarker.setGeometry(
+      new Point([
+        this.targetLongitude,
+        this.targetLatitude
+      ])
+    );
   }
 
   ngAfterViewInit(): void {
