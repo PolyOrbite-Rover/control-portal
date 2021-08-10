@@ -12,6 +12,11 @@ import TileLayer from 'ol/layer/Tile';
 import OSM, {ATTRIBUTION} from 'ol/source/OSM';
 import { GpsService } from '../gps/service/gps.service';
 import { toSize } from 'ol/size';
+import VectorSource from 'ol/source/Vector';
+import Style from 'ol/style/Style';
+import Icon from 'ol/style/Icon';
+import IconAnchorUnits from 'ol/style/IconAnchorUnits';
+import XYZ from 'ol/source/XYZ';
 
 const proj4 = (proj4Import as any).default;
 
@@ -78,6 +83,12 @@ export class MapComponent implements AfterViewInit {
       layers: [
         new TileLayer({
           source: new OSM({})
+        }),
+        new TileLayer({
+          source: new XYZ({
+            url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+            maxZoom: 19
+          })
         })
       ],
       target: 'map',
