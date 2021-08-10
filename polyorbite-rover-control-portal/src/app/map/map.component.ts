@@ -21,9 +21,10 @@ const proj4 = (proj4Import as any).default;
   styleUrls: ['./map.component.sass']
 })
 export class MapComponent implements AfterViewInit {
-  private readonly PROJECTION_NAME = "EPSG:3857";
+  private readonly PROJECTION_NAME = "EPSG:4326"; // "EPSG:3857";
   private readonly PROJECTION_DEFINITION_ARGS =
-    "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs";
+    "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
+    //"+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs";
   private readonly PROJECTION_EXTENT: Extent = [
     -20026376.39,
     -20048966.10,
@@ -66,12 +67,11 @@ export class MapComponent implements AfterViewInit {
     proj4.defs(this.PROJECTION_NAME, this.PROJECTION_DEFINITION_ARGS);
     register(proj4);
     this.projection = GetProjection(this.PROJECTION_NAME);
-    this.projection.setExtent(this.PROJECTION_EXTENT);
 
     this.view = new View({
       center: this.center,
       zoom: this.zoom,
-      projection: 'EPSG:4326'
+      projection: this.projection
     });
 
     this.map = new Map({
