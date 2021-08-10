@@ -6,54 +6,116 @@ import { ROSService } from '../ROS/ros.service';
   providedIn: 'root'
 })
 export class ArmControlProxyService {
-  private readonly ROBOTIC_ARM_TOPIC_NAME = '/rover_diff_drive_controller/cmd_vel';
-  private readonly ROBOTIC_ARM_MESSAGE_TYPE = 'geometry_msgs/Twist';
+  private readonly ROBOTIC_ARM_TOPIC_NAME = '/teleop_sixi';
+  private readonly ROBOTIC_ARM_MESSAGE_TYPE = 'sensor_msgs/Joy';
 
   private armTopic: Topic;
 
-  private linearVelocityCache: number;
-  private angularVelocityCache: number;
+  private zeroCache: number;
+  private oneCache: number;
+  private twoCache: number;
+  private threeCache: number;
+  private fourCache: number;
+  private fiveCache: number;
 
-  get linearVelocity(): number { return this.linearVelocityCache; }
-  set linearVelocity(velocity: number) {
-    this.linearVelocityCache = velocity;
-    this.publishVelocityTwist();
+  get zero(): number { return this.zeroCache; }
+  set zero(newValue: number) {
+    this.zeroCache = newValue;
+    this.publish();
   }
 
-  get angularVelocity(): number { return this.angularVelocityCache; }
-  set angularVelocity(velocity: number) {
-    this.angularVelocityCache = velocity;
-    this.publishVelocityTwist();
+  get one(): number { return this.oneCache; }
+  set one(newValue: number) {
+    this.oneCache = newValue;
+    this.publish();
   }
 
-  private publishVelocityTwist(): void {
-    const linearVelocity = this.linearVelocityCache;
-    const shouldInvertDirection = linearVelocity >= 0;
-    const angularVelocity = shouldInvertDirection ? -this.angularVelocityCache
-                                                  :  this.angularVelocityCache;
+  get two(): number { return this.twoCache; }
+  set two(newValue: number) {
+    this.twoCache = newValue;
+    this.publish();
+  }
 
-    const twist = new Message({
-      linear: {
-        x: linearVelocity * this.LINEAR_VELOCITY_COEFFICIENT,
-        y: 0,
-        z: 0
-      },
-      angular: {
-        x: 0,
-        y: 0,
-        z: angularVelocity * this.ANGULAR_VELOCITY_COEFFICIENT
-      },
+  get three(): number { return this.threeCache; }
+  set three(newValue: number) {
+    this.threeCache = newValue;
+    this.publish();
+  }
+
+  get four(): number { return this.fourCache; }
+  set four(newValue: number) {
+    this.fourCache = newValue;
+    this.publish();
+  }
+
+  get five(): number { return this.fiveCache; }
+  set five(newValue: number) {
+    this.fiveCache = newValue;
+    this.publish();
+  }
+
+  /*
+  private forwardCache: number;
+  private backwardCache: number;
+  private upCache: number;
+  private downCache: number;
+  private toolCache: number;
+
+  get forward(): number { return this.forwardCache; }
+  set forward(newValue: number) {
+    this.forwardCache = newValue;
+    this.publish();
+  }
+
+  get backward(): number { return this.backwardCache; }
+  set backward(newValue: number) {
+    this.backwardCache = newValue;
+    this.publish();
+  }
+
+  get up(): number { return this.upCache; }
+  set up(newValue: number) {
+    this.upCache = newValue;
+    this.publish();
+  }
+
+  get down(): number { return this.downCache; }
+  set down(newValue: number) {
+    this.downCache = newValue;
+    this.publish();
+  }
+
+  get tool(): number { return this.toolCache; }
+  set tool(newValue: number) {
+    this.toolCache = newValue;
+    this.publish();
+  }
+  */
+
+  private publish(): void {
+
+    const cmd = new Message({
+      zero: this.zeroCache,
+      one: this.oneCache,
+      two: this.twoCache,
+      three: this.threeCache,
+      four: this.fourCache,
+      five: this.fiveCache
     });
-    this.diffDriveVelocityTopic.publish(twist);
+    this.armTopic.publish(cmd);
   }
 
   constructor(ros: ROSService) {
-    this.linearVelocityCache = 0;
-    this.angularVelocityCache = 0;
+    this.zeroCache = 0;
+    this.oneCache = 0;
+    this.twoCache = 0;
+    this.threeCache = 0;
+    this.fourCache = 0;
+    this.fiveCache = 0;
 
-    this.diffDriveVelocityTopic = ros.getTopic(
-      this.DIFF_DRIVE_VELOCITY_TOPIC_NAME,
-      this.DIFF_DRIVE_VELOCITY_MESSAGE_TYPE,
+    this.armTopic = ros.getTopic(
+      this.ROBOTIC_ARM_TOPIC_NAME,
+      this.ROBOTIC_ARM_MESSAGE_TYPE,
     );
   }
 }

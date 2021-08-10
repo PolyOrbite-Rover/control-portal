@@ -8,7 +8,7 @@ enum Mode {
 }
 
 export class GamepadHandler {
-  public mode: Mode;
+  public mode: Mode = Mode.wheels;
 
   readonly REFRESH_RATE: number = 10;
 
@@ -32,6 +32,52 @@ export class GamepadHandler {
     return this.gamepad.axes[this.DIRECTION_AXIS];
   }
 
+  get arm0(): number {
+    return this.gamepad.axes[0];
+  }
+
+  get arm1(): number {
+    return this.gamepad.axes[1];
+  }
+
+  get arm2(): number {
+    return this.gamepad.axes[4];
+  }
+
+  get arm3(): number {
+    return this.gamepad.buttons[5].value - this.gamepad.buttons[4].value;
+  }
+
+  get arm4(): number {
+    return this.gamepad.axes[7];
+  }
+
+  get arm5(): number {
+    return this.gamepad.axes[6];
+  }
+
+  /*
+  get armForward(): number {
+    return;
+  }
+
+  get armBackward(): number {
+    return;
+  }
+
+  get armUp(): number {
+    return;
+  }
+
+  get armDown(): number {
+    return;
+  }
+
+  get armTool(): number {
+    return;
+  }
+  */
+
   get gamepad(): Gamepad {
     return navigator.getGamepads()[this.id];
   }
@@ -43,7 +89,12 @@ export class GamepadHandler {
       this.controlProxy.angularVelocity = this.angularVelocity;
     } else {
       // controlling ROBOTIC ARM with the gamepad
-      // this.armControlProxy.something = something...
+      this.armControlProxy.zero = this.arm0;
+      this.armControlProxy.one = this.arm1;
+      this.armControlProxy.two = this.arm2;
+      this.armControlProxy.three = this.arm3;
+      this.armControlProxy.four = this.arm4;
+      this.armControlProxy.five = this.arm5;
     }
   }
 

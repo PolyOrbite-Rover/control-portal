@@ -1,18 +1,18 @@
 <div class="wrapper">
-  <main>
-    <mat-card cameras>
-      <app-video-stream-switch></app-video-stream-switch>
-    </mat-card>
-    <mat-card state>
-      <app-rover-state></app-rover-state>
-    </mat-card>
-    <mat-card map>
-      <app-map [center]="[-12531000,6708172]"
-               [zoom]="14">
-      </app-map>
-    </mat-card>
-    <mat-card interest-points>
-      <app-interest-points></app-interest-points>
-    </mat-card>
-  </main>
+    <main>
+        <mat-card cameras>
+            <app-video-stream-switch></app-video-stream-switch>
+        </mat-card>
+        <mat-card state>
+            <app-controller-mode-switch></app-controller-mode-switch>
+            <app-rover-state></app-rover-state>
+        </mat-card>
+        <mat-card map>
+            <app-map [center]="[-12531000,6708172]" [zoom]="14">
+            </app-map>
+        </mat-card>
+        <mat-card interest-points>
+            <app-interest-points></app-interest-points>
+        </mat-card>
+    </main>
 </div>

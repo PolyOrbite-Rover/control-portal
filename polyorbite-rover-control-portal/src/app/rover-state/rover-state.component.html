@@ -1,13 +1,41 @@
 <div>
-  <h2>Linear velocity:</h2>
-  <mat-progress-bar mode="determinate"
-                   [value]="ajustForProgressBar(controlProxy.linearVelocity)">
-  </mat-progress-bar>
+    <h2>Linear velocity:</h2>
+    <mat-progress-bar mode="determinate" [value]="ajustForProgressBarRover(controlProxy.linearVelocity)">
+    </mat-progress-bar>
 </div>
 <br>
 <div>
-  <h2>Angular velocity:</h2>
-  <mat-progress-bar mode="determinate"
-                   [value]="ajustForProgressBar(controlProxy.angularVelocity)">
-  </mat-progress-bar>
+    <h2>Angular velocity:</h2>
+    <mat-progress-bar mode="determinate" [value]="ajustForProgressBarRover(controlProxy.angularVelocity)">
+    </mat-progress-bar>
+</div>
+<br>
+<div>
+    <h2>Arm Forward</h2>
+    <mat-progress-bar mode="determinate" [value]="ajustForProgressBarArm(armProxy.forward)">
+    </mat-progress-bar>
+</div>
+<br>
+<div>
+    <h2>Arm Backward</h2>
+    <mat-progress-bar mode="determinate" [value]="ajustForProgressBarArm(armProxy.backward)">
+    </mat-progress-bar>
+</div>
+<br>
+<div>
+    <h2>Arm Up</h2>
+    <mat-progress-bar mode="determinate" [value]="ajustForProgressBarArm(armProxy.up)">
+    </mat-progress-bar>
+</div>
+<br>
+<div>
+    <h2>Arm Down</h2>
+    <mat-progress-bar mode="determinate" [value]="ajustForProgressBarArm(armProxy.down)">
+    </mat-progress-bar>
+</div>
+<br>
+<div>
+    <h2>Arm Tool</h2>
+    <mat-progress-bar mode="determinate" [value]="ajustForProgressBarArm(armProxy.tool)">
+    </mat-progress-bar>
 </div>
