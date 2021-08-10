@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { Topic } from 'roslib';
+import { GpsService } from '../gps/service/gps.service';
 import { InterestPoint } from '../interest-point/interest-point';
 import { InterestPointService } from '../interest-point/service/interest-point.service';
 import { PhotographInterestPoint } from '../interest-point/type/photograph-interest-point';
@@ -31,7 +32,7 @@ export class VideoStreamComponent implements AfterViewInit {
   }
 
   get videoUrl(): string {
-    return `http://192.168.3.11:8080/stream?topic=${this.cameraTopicName}`;
+    return `http://jxnx:8080/stream?topic=${this.cameraTopicName}`;
   }
 
   get frameWidth(): number {
@@ -88,7 +89,12 @@ export class VideoStreamComponent implements AfterViewInit {
     var dataURL = canvas.toDataURL("image/png");
     let base64Frame = dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
     
-    this.interestPoints.add(new PhotographInterestPoint(base64Frame));
+    this.interestPoints.add(
+      new PhotographInterestPoint(
+        base64Frame,
+        this.gps.currentCoordinates
+      )
+    );
   }
 
   ngAfterViewInit(): void {
@@ -98,5 +104,5 @@ export class VideoStreamComponent implements AfterViewInit {
     });
   }
 
-  constructor(private interestPoints: InterestPointService) { }
+  constructor(private interestPoints: InterestPointService, private gps: GpsService) { }
 }

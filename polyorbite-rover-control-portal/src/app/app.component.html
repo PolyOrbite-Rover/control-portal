@@ -3,18 +3,15 @@
     <mat-card cameras>
       <app-video-stream-switch></app-video-stream-switch>
     </mat-card>
+    <mat-card map>
+      <app-gps-data-visualizer></app-gps-data-visualizer>
+      <app-map [zoom]="17"></app-map>
+    </mat-card>
     <mat-card state>
       <app-rover-state></app-rover-state>
     </mat-card>
-    <mat-card map>
-      <app-map [zoom]="17">
-      </app-map>
-    </mat-card>
     <mat-card interest-points>
       <app-interest-points></app-interest-points>
-    </mat-card>
-    <mat-card>
-      <app-gps-data-visualizer></app-gps-data-visualizer>
     </mat-card>
   </main>
 </div>

@@ -17,6 +17,11 @@ export class PhotographInterestPointDetailsComponent extends InterestPointDetail
     return `${header},${data}`;
   }
 
+  get coordinates(): string {
+    let coordinatesData = (this.interestPoint as PhotographInterestPoint).model.coordinates;
+    return `[${coordinatesData.latitude}, ${coordinatesData.longitude}]`;
+  }
+
   constructor() {
     super();
   }

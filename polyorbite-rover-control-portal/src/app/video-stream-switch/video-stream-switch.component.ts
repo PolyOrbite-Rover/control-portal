@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./video-stream-switch.component.sass']
 })
 export class VideoStreamSwitchComponent {
-  currentTopic: string = "/stereo_camera/left/image_raw";
+  currentTopic: string = "/front_camera/image_raw";
 
   constructor() { }
 }
