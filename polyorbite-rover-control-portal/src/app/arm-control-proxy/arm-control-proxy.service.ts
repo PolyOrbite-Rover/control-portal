@@ -6,8 +6,8 @@ import { ROSService } from '../ROS/ros.service';
   providedIn: 'root'
 })
 export class ArmControlProxyService {
-  private readonly ROBOTIC_ARM_TOPIC_NAME = '/teleop_sixi';
-  private readonly ROBOTIC_ARM_MESSAGE_TYPE = 'sensor_msgs/Joy';
+  private readonly ROBOTIC_ARM_TOPIC_NAME = '/sixi_commands';
+  private readonly ROBOTIC_ARM_MESSAGE_TYPE = 'sixi_robot/CmdWeb';
 
   private armTopic: Topic;
 
