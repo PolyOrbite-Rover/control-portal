@@ -17,6 +17,8 @@ import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
 import IconAnchorUnits from 'ol/style/IconAnchorUnits';
 import XYZ from 'ol/source/XYZ';
+import Point from 'ol/geom/Point';
+import { WGS84Coordinates } from '../gps/data/wgs84-coordinates';
 
 const proj4 = (proj4Import as any).default;
 
@@ -97,6 +99,23 @@ export class MapComponent implements AfterViewInit {
         new ScaleLine({})
       ])
     });
+    this.makeRoverMarker({ latitude: 0, longitude: 0});
+
+    this.view.centerOn([0, 0], toSize(this.zoom), [0, 0]);
+  }
+
+  private makeRoverMarker(coordinates: WGS84Coordinates) {
+    let roverSource = new VectorSource({});
+    let roverLayer = new VectorLayer({
+      source: roverSource
+    });
+    this.map.addLayer(roverLayer);
+    
+    let roverMarker = new Feature({
+      geometry: new Point([coordinates.longitude, coordinates.latitude])
+    });
+
+    roverSource.addFeature(roverMarker);
   }
 
   ngAfterViewInit(): void {
@@ -106,6 +125,7 @@ export class MapComponent implements AfterViewInit {
       if(this.autoCenter) {
         this.center = [coordinates.longitude, coordinates.latitude];
         this.view.centerOn(this.center, toSize(this.zoom), [0, 0]);
+        this.makeRoverMarker(coordinates);
       }
     });
 
