@@ -32,7 +32,7 @@ export class VideoStreamComponent implements AfterViewInit {
   }
 
   get videoUrl(): string {
-    return `http://jxnx:8080/stream?topic=${this.cameraTopicName}`;
+    return `http://localhost:8080/stream?topic=${this.cameraTopicName}`;
   }
 
   get frameWidth(): number {

@@ -8,7 +8,7 @@ export class ROSService {
   private ros: Ros;
 
   constructor() {
-    this.ros = new Ros({url: 'ws://jxnx:9090'});
+    this.ros = new Ros({url: 'ws://localhost:9090'});
 
     this.ros.on('error', () => {
       console.error('Could not connect to ROS');
