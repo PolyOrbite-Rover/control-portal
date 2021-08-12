@@ -8,6 +8,7 @@ import { MaterialModule } from './material.module';
 import { VideoStreamSwitchComponent } from './video-stream-switch/video-stream-switch.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { RoverStateComponent } from './rover-state/rover-state.component';
+import { ControllerModeSwitchComponent } from './controller-mode-switch/controller-mode-switch.component';
 import { MapComponent } from './map/map.component';
 import { InterestPointsComponent } from './interest-point/component/list/interest-points.component';
 import { PhotographInterestPointDetailsComponent } from './interest-point/component/details/photograph/photograph-interest-point-details.component';
@@ -22,6 +23,7 @@ import { FormsModule } from '@angular/forms';
     VideoStreamComponent,
     VideoStreamSwitchComponent,
     RoverStateComponent,
+    ControllerModeSwitchComponent,
     MapComponent,
     InterestPointsComponent,
     PhotographInterestPointDetailsComponent,
