@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -6,15 +6,15 @@ import { Observable, of } from 'rxjs';
 })
 export class ControllerModeSwitchService {
 
-  observableState: Observable<string>;
+  observableState: EventEmitter<string> = new EventEmitter<string>();
   private state: string;
 
   constructor() {
     this.state = "wheels";
-    this.observableState = of(this.state);
   }
 
   setState(newState: string) {
     this.state = newState;
+    this.observableState.next(newState);
   }
 }

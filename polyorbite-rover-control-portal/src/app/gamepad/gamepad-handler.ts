@@ -98,9 +98,14 @@ export class GamepadHandler {
     }
   }
 
-  constructor(private id: number, private controlProxy: RoverControlProxyService, private armControlProxy: ArmControlProxyService, private switch: ControllerModeSwitchService) {
-    this.switch.setState().subscribe((data) => {
-      if (data == "wheels") {
+  constructor(
+    private id: number,
+    private controlProxy: RoverControlProxyService,
+    private armControlProxy: ArmControlProxyService,
+    private switchService: ControllerModeSwitchService,
+    ) {
+    this.switchService.observableState.subscribe(state => {
+      if (state == "wheels") {
         this.mode = Mode.wheels;
       } else {
         this.mode = Mode.arm;
