@@ -13,6 +13,7 @@ export class GamepadHandler {
   readonly REFRESH_RATE: number = 10;
 
   readonly DIRECTION_AXIS = 0;
+  readonly SHOVEL_AXIS = 3;
   readonly ACCELERATOR_BUTTON = 7;
   readonly DECELERATOR_BUTTON = 6;
 
@@ -30,6 +31,10 @@ export class GamepadHandler {
 
   get angularVelocity(): number {
     return this.gamepad.axes[this.DIRECTION_AXIS];
+  }
+
+  get shovelVelocity(): number {
+    return -this.gamepad.axes[this.SHOVEL_AXIS];
   }
 
   get arm0(): number {
@@ -87,6 +92,7 @@ export class GamepadHandler {
       // controlling WHEELS with the gamepad
       this.controlProxy.linearVelocity = this.linearVelocity;
       this.controlProxy.angularVelocity = this.angularVelocity;
+      this.controlProxy.shovelVelocity = this.shovelVelocity;
     } else {
       // controlling ROBOTIC ARM with the gamepad
       this.armControlProxy.zero = this.arm0;
